@@ -16,6 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from telegramAPI.views import *
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/get_rooms/', RoomViewList.as_view()),
+    path('api/new_link/', LinkAddView.as_view()),
+    path('api/get_room/<int:pk>/', RoomViewOne.as_view()),
 ]
