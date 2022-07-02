@@ -231,12 +231,12 @@ def add_link(tg_id, link):
         info = get_all_info(tg_id)
         #  print(info)
         # (link=str, room=id_room, tg_name=str, password=password)
-        json_link = json.dumps({'link': str(link), 'room': int(info[2]),
-                     'tg_name': str(tg_id), 'password': str(info[3])})
+        json_link = {'link': str(link), 'room': int(info[2]),
+                     'tg_name': str(tg_id), 'password': str(info[3])}
 
-        response = requests.post(f"{mainlink}/api/new_link/", json=json_link)
-        #
-        print(json_link)
+        response = requests.post(f"{mainlink}/api/new_link/", data=json_link)
+
+        print(json_link, type(json_link))
         print({'link': str(link), 'room': int(info[2]),
                                        'tg_name': str(tg_id), 'password': str(info[3])})
         return True

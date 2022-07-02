@@ -30,13 +30,16 @@ class LinkViewSave(generics.CreateAPIView):
 
 class LinkAddView(APIView):
     def post(self, request):
-        ser = request.data
+        ser = request.data.dict()
+        print(ser, type(ser))
         password_message = ser.pop("password")
         try:
             Room.objects.get(password_room=password_message)
             ser = LinkSerializer(data=ser)
             ser.is_valid(raise_exception=True)
             ser.save()
+            print('add true')
             return Response({"result": True})
         except:
+            print('add false')
             return Response({"result": False})
