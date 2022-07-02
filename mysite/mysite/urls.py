@@ -21,6 +21,7 @@ from telegramAPI.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/get_rooms/', RoomViewList.as_view()),
+    path('api/get_users/', UserViewList.as_view()),
     path('api/new_link/', LinkAddView.as_view()),
     path('api/get_room/<int:pk>/', RoomViewOne.as_view()),
 ]
