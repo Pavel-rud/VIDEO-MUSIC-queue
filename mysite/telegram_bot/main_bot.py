@@ -5,7 +5,7 @@ from services_bot import *
 
 link = "http://127.0.0.1:8000"
 
-TOKEN = '2032582622:AAEkc3HyRv5YgsqqkCn1ioX8Cp86Rw26P_s'
+TOKEN = '5529060438:AAENrDJS7yA96lZrN63Zr_q0QOou_NMnA_I'
 
 bot = telebot.TeleBot(TOKEN)
 
