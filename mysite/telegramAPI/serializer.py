@@ -13,8 +13,3 @@ class LinkSerializer(serializers.ModelSerializer):
         model = Link
         fields = "__all__"
 
-
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CustomUser
-        fields = ("id", "username", "name", "tg_name")

@@ -1,21 +1,12 @@
-from django.shortcuts import render
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
-from sait.models import Room, Link
-from users.models import CustomUser
 from .serializer import *
 
 
 class RoomViewList(generics.ListAPIView):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
-
-
-class UserViewList(generics.ListAPIView):
-    queryset = CustomUser.objects.all()
-    serializer_class = UserSerializer
 
 
 class RoomViewOne(generics.RetrieveAPIView):

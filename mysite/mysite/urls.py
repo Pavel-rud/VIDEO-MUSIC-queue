@@ -14,9 +14,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-
+from django.urls import path, include
 from telegramAPI.views import *
+from users.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,4 +24,5 @@ urlpatterns = [
     path('api/get_users/', UserViewList.as_view()),
     path('api/new_link/', LinkAddView.as_view()),
     path('api/get_room/<int:pk>/', RoomViewOne.as_view()),
+    path('api/sait/', include('users.urls')),
 ]
