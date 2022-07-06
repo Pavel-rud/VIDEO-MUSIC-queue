@@ -78,18 +78,19 @@ export default {
   },
   methods: {
     async login() {
-      await axios.post(`http://127.0.0.1:8000/api/sait/auth/token/login/ `, {
+      await axios.post(`/api/sait/auth/token/login/ `, {
         username: this.username,
         password: this.password,
-      }).then(() =>{
+      }).then(response =>{
         localStorage.setItem('usernameW', this.username)
+        localStorage.setItem('tokenW', response.data.auth_token)
         this.textResponse = 'Success!'
         this.$router.push('/home')
       }).catch(error => {
         console.log(error)
         this.textResponse = Object.values( error.response.data ).map(x => x[0]).join('\r\n')
         if (this.textResponse.length > 10) {
-          this.textResponse = "Server error"
+          this.textResponse = "Password or login is incorrect"
         }
         console.log(this.textResponse)
       })

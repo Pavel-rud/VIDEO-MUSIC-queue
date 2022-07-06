@@ -1,5 +1,6 @@
 <template>
 <div class="profile">
+  <img class="rounded-circle"  width="250" height="250" src="{{ avatar }} " style="cursor: pointer; border: 2px solid black; "/>
   <p class="nameuser">{{ username }}</p>
   <table>
     <tr>
@@ -7,7 +8,7 @@
         <label for="mail"><h6>Mail: </h6></label>
       </td>
       <td>
-        <InputText class="p-inputtext" type="text" v-model="NameRoom" id="mail"/>
+        <InputText class="p-inputtext" type="text" v-model="mail" id="mail"/>
       </td>
     </tr>
     <tr>
@@ -15,33 +16,77 @@
         <label for="tg"><h6>Telegram: </h6></label>
       </td>
       <td>
-        <InputText class="p-inputtext" type="text" v-model="NameRoom" id="tg"/>
+        <InputText class="p-inputtext" type="text" v-model="tg" id="tg"/>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label for="av"><h6>Avatar: </h6></label>
+      </td>
+      <td>
+        <FileUpload  style="margin-top:5px; margin-left:10px" mode="basic" name="demo[]" url="./upload" v-model="avatar" id="av"/>
       </td>
     </tr>
   </table>
-  <Button class="bt" @click="login" >Save changes</Button>
-
+  <Button class="bt" @click="save_changes" >Save changes</Button>
+  <p>{{textResponse}}</p>
 </div>
 </template>
 
 <script>
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
+import FileUpload from 'primevue/fileupload';
+import axios from "axios";
 
 export default {
   name: "ProfilePage",
   components: {
     Button,
     InputText,
+    FileUpload,
   },
   data() {
     return {
-      username: 'example',
+      username: '',
       tg: '',
-      mail: '@asdasdasd',
+      mail: '',
       textResponse: '',
+      avatar: '',
     }
   },
+  async created() {
+    this.username = localStorage.getItem('usernameW')
+    try{
+      this.response = await axios.get(`http://127.0.0.1:8000/api/auth/users/me/`,
+          {headers: {'Authorization': localStorage.getItem("tokenW")}})
+      this.tg = this.response.data.tg_name
+      this.mail = this.response.data.email
+      this.avatar = this.response.data.avatar
+    } catch (error) {
+      console.log(error.response.data)
+      this.textResponse = "Error loading data"
+    }
+  },
+  methods: {
+    async save_changes() {
+      await axios.post(`/api/sait/auth/token/login/ `, {
+        tg_name: this.tg,
+        email: this.mail,
+        avatar: this.avatar
+      }, {headers: {'Authorization': localStorage.getItem("tokenW")}}).then(response =>{
+        response
+      }).catch(error => {
+        console.log(error)
+        this.textResponse = Object.values( error.response.data ).map(x => x[0]).join('\r\n')
+        if (this.textResponse.length > 10) {
+          this.textResponse = "Data sending error"
+        }
+        console.log(this.textResponse)
+      })
+    }
+  },
+
 }
 </script>
 
@@ -63,5 +108,11 @@ export default {
 }
 .bt {
   margin-top: 10px;
+}
+.rounded-circle {
+  border-radius: 50%!important;
+}
+.fileu{
+  margin-top:20px;
 }
 </style>

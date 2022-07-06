@@ -93,9 +93,13 @@ export default {
       }).then(response => {
         console.log(response)
         this.textResponse = 'Success!'
+        this.$router.push('/login')
       }).catch(error => {
         console.log(error)
         this.textResponse = Object.values( error.response.data ).map(x => x[0]).join('\r\n')
+        if (this.textResponse.length > 10) {
+          this.textResponse = "Server error"
+        }
         console.log(this.textResponse)
       })
     }

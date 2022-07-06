@@ -68,19 +68,19 @@ export default {
   },
   methods: {
     async login() {
-      await axios.put(`/api/users/`, {
+      await axios.post(`/api/users/`, {
+        user: localStorage.getItem('usernameW'),
         NameRoom: this.NameRoom,
         password: this.password,
         is_music: this.is_music,
-      }).then(() =>{
-        localStorage.setItem('usernameW', this.username)
+      }, {headers: {'Authorization': localStorage.getItem("tokenW")}}).then(() =>{
+        localStorage.setItem('roomW', this.NameRoom)
         this.textResponse = 'Success!'
-        this.$router.push('/home')
       }).catch(error => {
         console.log(error)
         this.textResponse = Object.values( error.response.data ).map(x => x[0]).join('\r\n')
         if (this.textResponse.length > 5) {
-          this.textResponse = "Server error"
+          this.textResponse = "Error"
         }
         console.log(this.textResponse)
       })

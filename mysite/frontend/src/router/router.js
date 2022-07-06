@@ -6,7 +6,7 @@ import RegisterUser from '../components/RegisterUser'
 import LogoutUser from '../components/LogoutUser'
 import ProfilePage from "../components/ProfilePage";
 import CreateRoom from "../components/CreateRoom";
-import RoomPage from "@/components/RoomPage";
+import RoomPage from "../components/RoomPage";
 
 const router = createRouter({
     history: createWebHashHistory(),
