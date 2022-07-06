@@ -1,11 +1,13 @@
 <template>
   <div class="home">
     <h2>
-      Здесь вы можете всей компанией смотреть видео/слушать музыку!
+      Here you can watch video / listen to music with the friends!
     </h2>
     <h2>
-      Вы можете добавлять видео/музыку в очередь при помощи телеграмм бота: <a href="">@DjangoVueProjBot</a>
+      You can add video/music to the queue using telegram bot:
     </h2>
+    <h2></h2>
+    <h2><a class="blue-link" href="http://t.me/VIDEO_MUSIC_QUEUE_bot">@VIDEO_MUSIC_QUEUE_bot</a></h2>
     <img src="@/assets/img/logo.png" class="logovm">
   </div>
 </template>
@@ -27,6 +29,10 @@ export default {
   width: 300px;
   margin-right: auto;
   margin-left: auto;
+}
+
+.blue-link{
+  color: #006fff;
 }
 
 .home {

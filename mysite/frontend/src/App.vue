@@ -10,7 +10,7 @@
         </router-link>
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
           <li><router-link class="nav-link" to="/home" ><a class="nav-link px-2 link-dark">Home</a></router-link></li>
-          <li><router-link class="nav-link" to="/home" ><a class="nav-link px-2 link-dark">Room</a></router-link></li>
+          <li><router-link class="nav-link" to="/room" ><a class="nav-link px-2 link-dark">Room</a></router-link></li>
           <li><router-link class="nav-link" to="/createroom" ><a class="nav-link px-2 link-dark">Create room</a></router-link></li>
           <li><router-link class="nav-link" to="/profile" ><a class="nav-link px-2 link-dark">Profile</a></router-link></li>
         </ul>

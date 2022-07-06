@@ -1,8 +1,12 @@
 <template>
+
   <table class="add">
     <tbody style="text-align: left">
     <tr>
       <td>
+        <p class="tit">
+          You can create a new room with music or video
+        </p>
         <label for="usr"><h6>Room name</h6></label>
       </td>
     </tr>
@@ -24,7 +28,7 @@
     <tr>
       <td>
         <Checkbox class="align-middle" v-model="is_music" title="show pass" id="ismusic" :binary="true"  />
-        <label for="ismusic"><h6>Is music</h6></label>
+        <label for="ismusic" style="padding-left: 7px"><h6>Is music</h6></label>
       </td>
     </tr>
     <tr style="text-align: left">
@@ -95,5 +99,9 @@ export default {
 .p-inputtext {
   padding: 4px;
 }
-
+.tit{
+  font-size: 30px;
+  color: black;
+  text-align: left;
+}
 </style>

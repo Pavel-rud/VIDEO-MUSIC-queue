@@ -86,7 +86,7 @@ export default {
   },
   methods: {
     async register() {
-      await axios.post('/api/users/', {
+      await axios.post('http://127.0.0.1:8000/api/sait/auth/users/', {
         username: this.username,
         password: this.password,
         email: this.email

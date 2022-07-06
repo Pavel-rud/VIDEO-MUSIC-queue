@@ -70,6 +70,7 @@ export default {
       username: '',
       password: '',
       textResponse: '',
+      token: '',
     }
   },
   title() {
@@ -77,7 +78,7 @@ export default {
   },
   methods: {
     async login() {
-      await axios.put(`/api/users/`, {
+      await axios.post(`http://127.0.0.1:8000/api/sait/auth/token/login/ `, {
         username: this.username,
         password: this.password,
       }).then(() =>{
@@ -87,7 +88,7 @@ export default {
       }).catch(error => {
         console.log(error)
         this.textResponse = Object.values( error.response.data ).map(x => x[0]).join('\r\n')
-        if (this.textResponse.length > 5) {
+        if (this.textResponse.length > 10) {
           this.textResponse = "Server error"
         }
         console.log(this.textResponse)
