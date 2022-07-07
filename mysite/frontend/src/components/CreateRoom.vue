@@ -66,7 +66,7 @@
           {{ room.is_mus}}
         </td>
         <td>
-          <Button>{{ room.is_active }}</Button>
+          <Button @click="setact(room.id)">{{ room.is_active }}</Button>
         </td>
       </tr>
       </tbody>
@@ -140,6 +140,7 @@ export default {
         localStorage.setItem('active_roomW', response.data.id)
         localStorage.setItem('my_active_roomW', response.data.id)
         this.textResponse = 'Success!'
+        this.$router.push('/createroom')
       }).catch(error => {
         console.log(error)
         this.textResponse = Object.values( error.response.data ).map(x => x[0]).join('\r\n')
@@ -148,6 +149,11 @@ export default {
         }
         console.log(this.textResponse)
       })
+    },
+    async setact(id_act){
+      localStorage.setItem('active_roomW', id_act)
+      localStorage.setItem('my_active_roomW', id_act)
+      this.$router.push('/createroom')
     }
   },
 
