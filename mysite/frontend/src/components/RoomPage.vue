@@ -124,8 +124,25 @@ export default {
           {headers: {'Authorization':"Token " + localStorage.getItem("tokenW")}})
       this.NameRoom = this.room.data.name_room
       this.RoomId = localStorage.getItem('active_roomW')
+      this.list_of_links = await axios.get(`http://127.0.0.1:8000/api/room/links/` + localStorage.getItem('active_roomW') + '/',
+          {headers: {'Authorization':"Token " + localStorage.getItem("tokenW")}})
+      this.list_of_links = this.list_of_links.data.result
     } catch (error) {
       console.log(error.response.data)
+    }
+  },
+  computed: {
+    listRooms() {
+
+      let list = []
+      for (let index = 0; index < this.list_of_links.length; index++) {
+        const element = this.list_of_links[index]
+        list.push({
+          author: element.username_add,
+          text: element.link,
+        })
+      }
+      return list
     }
   },
   methods:{
