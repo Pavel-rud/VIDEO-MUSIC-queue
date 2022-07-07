@@ -6,13 +6,13 @@ from .models import CustomUser
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = CustomUser
-        fields = ("username", "name", "password1", "password2", "email", "tg_name", "avatar")
+        fields = ("username", "password1", "password2", "email", "tg_name", "avatar")
 
 
 class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = CustomUser
-        fields = ("name", "email", "tg_name", "avatar")
+        fields = ("email", "tg_name", "avatar")
 
 
 class CustomUserUpdateForm(forms.ModelForm):
@@ -23,4 +23,4 @@ class CustomUserUpdateForm(forms.ModelForm):
 
     class Meta:
         model = CustomUser
-        fields = ("name", "email", "tg_name", "avatar")
+        fields = ("email", "tg_name", "avatar")

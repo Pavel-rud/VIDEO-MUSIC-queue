@@ -1,7 +1,7 @@
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializer import *
+from sait.serializer import *
 
 
 class RoomViewList(generics.ListAPIView):
@@ -31,6 +31,6 @@ class LinkAddView(APIView):
             ser.save()
             print('add true')
             return Response({"result": True})
-        except:
+        except Exception as e:
             print('add false')
-            return Response({"result": False})
+            return Response({"result": str(e)})

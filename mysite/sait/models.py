@@ -3,8 +3,8 @@ from users.models import CustomUser
 
 
 class Room(models.Model):
-    name_room = models.CharField(max_length=50)
-    password_room = models.CharField(max_length=50, unique=True)
+    name_room = models.CharField(max_length=50, unique=True)
+    password_room = models.CharField(max_length=50)
     owner_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     # owner_name = models.CharField(max_length=50, default=CustomUser.objects.get(name=), editable=False)
     is_music = models.BooleanField(default=True)

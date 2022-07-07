@@ -25,4 +25,5 @@ urlpatterns = [
     path('api/new_link/', LinkAddView.as_view()),
     path('api/get_room/<int:pk>/', RoomViewOne.as_view()),
     path('api/sait/', include('users.urls')),
+    path('api/room/', include('sait.urls')),
 ]
