@@ -27,13 +27,13 @@
     </tr>
     <tr>
       <td>
-        <Checkbox class="align-middle" v-model="is_music" title="show pass" id="ismusic" :binary="true"  />
+        <Checkbox class="align-middle" v-model="is_music" title="show pass" id="ismusic" :binary="true"/>
         <label for="ismusic" style="padding-left: 7px"><h6>Is music</h6></label>
       </td>
     </tr>
     <tr style="text-align: left">
       <td>
-        <Button @click="create_room" >Create room</Button>
+        <Button @click="create_room">Create room</Button>
       </td>
     </tr>
     <tr style="text-align: center; white-space: pre;">
@@ -63,7 +63,7 @@
           {{ room.name }}
         </td>
         <td>
-          {{ room.is_mus}}
+          {{ room.is_mus }}
         </td>
         <td>
           <Button @click="setact(room.id)">{{ room.is_active }}</Button>
@@ -80,6 +80,7 @@ import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import Checkbox from 'primevue/checkbox'
 import axios from "axios";
+// import {computed} from "vue";
 
 
 export default {
@@ -104,7 +105,7 @@ export default {
   async created() {
     try {
       this.rooms = await axios.post(`http://127.0.0.1:8000/api/room/my_rooms/`, {username: localStorage.getItem("usernameW")},
-          {headers: {'Authorization':"Token " + localStorage.getItem("tokenW")}})
+          {headers: {'Authorization': "Token " + localStorage.getItem("tokenW")}})
       this.rooms = this.rooms.data.result
     } catch (error) {
       console.log(error.response.data)
@@ -116,7 +117,7 @@ export default {
       for (let index = 0; index < this.rooms.length; index++) {
         const element = this.rooms[index]
         let active = "Set active";
-        if (element.id_room.toString() === localStorage.getItem('my_active_roomW').toString()){
+        if (element.id_room.toString() === localStorage.getItem('my_active_roomW').toString()) {
           active = "Is active";
         }
         list.push({
@@ -136,24 +137,39 @@ export default {
         name_room: this.NameRoom,
         password_room: this.password,
         is_music: this.is_music,
-      }, {headers: {'Authorization':"Token " + localStorage.getItem("tokenW")}}).then(response =>{
+      }, {headers: {'Authorization': "Token " + localStorage.getItem("tokenW")}}).then(response => {
         localStorage.setItem('active_roomW', response.data.id)
         localStorage.setItem('my_active_roomW', response.data.id)
         this.textResponse = 'Success!'
-        this.$router.push('/createroom')
+        // this.$router.push('/createroom')
+
       }).catch(error => {
         console.log(error)
-        this.textResponse = Object.values( error.response.data ).map(x => x[0]).join('\r\n')
+        this.textResponse = Object.values(error.response.data).map(x => x[0]).join('\r\n')
         if (this.textResponse.length > 5) {
           this.textResponse = "Error"
         }
         console.log(this.textResponse)
       })
+      try {
+        this.rooms = await axios.post(`http://127.0.0.1:8000/api/room/my_rooms/`, {username: localStorage.getItem("usernameW")},
+            {headers: {'Authorization': "Token " + localStorage.getItem("tokenW")}})
+        this.rooms = this.rooms.data.result
+      } catch (error) {
+        console.log(error.response.data)
+      }
     },
-    async setact(id_act){
+    async setact(id_act) {
       localStorage.setItem('active_roomW', id_act)
       localStorage.setItem('my_active_roomW', id_act)
-      this.$router.push('/createroom')
+      // this.$router.push('/createroom')
+      try {
+        this.rooms = await axios.post(`http://127.0.0.1:8000/api/room/my_rooms/`, {username: localStorage.getItem("usernameW")},
+            {headers: {'Authorization': "Token " + localStorage.getItem("tokenW")}})
+        this.rooms = this.rooms.data.result
+      } catch (error) {
+        console.log(error.response.data)
+      }
     }
   },
 
@@ -166,14 +182,17 @@ export default {
   margin-top: 5px;
   margin-left: 50px;
 }
+
 .p-inputtext {
   padding: 4px;
 }
-.tit{
+
+.tit {
   font-size: 30px;
   color: black;
   text-align: left;
 }
+
 .table {
   width: 98%;
   border: none;
@@ -181,7 +200,8 @@ export default {
   background-color: rgba(112, 129, 183, 0.51);
   border-radius: 10px;
 }
-.your_room{
+
+.your_room {
   text-align: left;
   margin-left: 50px;
 }

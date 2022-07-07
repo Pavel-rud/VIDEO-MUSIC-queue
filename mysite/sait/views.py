@@ -118,7 +118,6 @@ class ListLinksView(APIView):
             r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'
             r'(?::\d+)?'
             r'(?:/?|[/?]\S+)$', re.IGNORECASE)
-
         t = Link.objects.filter(room_id=pk)
         data = list()
         for i in t:
