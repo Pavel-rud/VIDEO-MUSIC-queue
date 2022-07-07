@@ -78,7 +78,7 @@ export default {
   },
   methods: {
     async login() {
-      await axios.post(`/api/sait/auth/token/login/ `, {
+      await axios.post(`http://127.0.0.1:8000/api/sait/auth/token/login/ `, {
         username: this.username,
         password: this.password,
       }).then(response =>{

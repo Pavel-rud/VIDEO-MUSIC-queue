@@ -58,8 +58,8 @@ export default {
   async created() {
     this.username = localStorage.getItem('usernameW')
     try{
-      this.response = await axios.get(`http://127.0.0.1:8000/api/auth/users/me/`,
-          {headers: {'Authorization': localStorage.getItem("tokenW")}})
+      this.response = await axios.get(`http://127.0.0.1:8000/api/sait/auth/users/me/`,
+          {headers: {'Authorization':"Token " + localStorage.getItem("tokenW")}})
       this.tg = this.response.data.tg_name
       this.mail = this.response.data.email
       this.avatar = this.response.data.avatar
@@ -70,11 +70,11 @@ export default {
   },
   methods: {
     async save_changes() {
-      await axios.post(`/api/sait/auth/token/login/ `, {
+      await axios.put(`http://127.0.0.1:8000/api/sait/auth/users/me/ `, {
         tg_name: this.tg,
         email: this.mail,
         avatar: this.avatar
-      }, {headers: {'Authorization': localStorage.getItem("tokenW")}}).then(response =>{
+      }, {headers: {'Authorization':"Token " + localStorage.getItem("tokenW")}}).then(response =>{
         response
       }).catch(error => {
         console.log(error)

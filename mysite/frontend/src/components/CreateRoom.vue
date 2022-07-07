@@ -33,7 +33,7 @@
     </tr>
     <tr style="text-align: left">
       <td>
-        <Button @click="Create" >Create room</Button>
+        <Button @click="create_room" >Create room</Button>
       </td>
     </tr>
     <tr style="text-align: center; white-space: pre;">
@@ -67,13 +67,13 @@ export default {
     }
   },
   methods: {
-    async login() {
-      await axios.post(`/api/users/`, {
-        user: localStorage.getItem('usernameW'),
-        NameRoom: this.NameRoom,
-        password: this.password,
+    async create_room() {
+      await axios.post(`http://127.0.0.1:8000/api/room/new/`, {
+        username: localStorage.getItem('usernameW'),
+        name_room: this.NameRoom,
+        password_room: this.password,
         is_music: this.is_music,
-      }, {headers: {'Authorization': localStorage.getItem("tokenW")}}).then(() =>{
+      }, {headers: {'Authorization':"Token " + localStorage.getItem("tokenW")}}).then(() =>{
         localStorage.setItem('roomW', this.NameRoom)
         this.textResponse = 'Success!'
       }).catch(error => {
