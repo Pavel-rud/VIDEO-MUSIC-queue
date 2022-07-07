@@ -24,7 +24,7 @@
         <label for="av"><h6>Avatar: </h6></label>
       </td>
       <td>
-        <FileUpload  style="margin-top:5px; margin-left:10px" mode="basic" name="demo[]" url="./upload" v-model="avatar" id="av"/>
+        <FileUpload  style="margin-top:5px; margin-left:10px" mode="basic" name="demo[]" url="./upload" accept="image/*" v-model="avatar" id="av"/>
       </td>
     </tr>
   </table>
@@ -41,6 +41,9 @@ import axios from "axios";
 
 export default {
   name: "ProfilePage",
+  title() {
+    return "Profile"
+  },
   components: {
     Button,
     InputText,
@@ -55,6 +58,7 @@ export default {
       avatar: '',
     }
   },
+
   async created() {
     this.username = localStorage.getItem('usernameW')
     try{

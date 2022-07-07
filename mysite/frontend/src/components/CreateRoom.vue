@@ -43,6 +43,36 @@
     </tr>
     </tbody>
   </table>
+  <div class="your_room">
+    <p class="tit">
+      Your rooms
+    </p>
+    <table class="table">
+      <tr>
+        <td><h6>ID</h6></td>
+        <td><h6>Room name</h6></td>
+        <td><h6>Is music</h6></td>
+        <td><h6>Is active</h6></td>
+      </tr>
+      <tbody>
+      <tr v-for="room in listRooms" v-bind:key="room">
+        <td>
+          {{ room.id }}
+        </td>
+        <td>
+          {{ room.name }}
+        </td>
+        <td>
+          {{ room.is_mus}}
+        </td>
+        <td>
+          <Button>{{ room.is_active }}</Button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
 </template>
 
 <script>
@@ -64,6 +94,39 @@ export default {
       NameRoom: '',
       password: '',
       is_music: false,
+      rooms: '',
+      active: '',
+    }
+  },
+  title() {
+    return "Create room"
+  },
+  async created() {
+    try {
+      this.rooms = await axios.post(`http://127.0.0.1:8000/api/room/my_rooms/`, {username: localStorage.getItem("usernameW")},
+          {headers: {'Authorization':"Token " + localStorage.getItem("tokenW")}})
+      this.rooms = this.rooms.data
+    } catch (error) {
+      console.log(error.response.data)
+    }
+  },
+  computed: {
+    listRooms() {
+      let list = []
+      for (let index = 0; index < this.rooms.length; index++) {
+        const element = this.rooms[index]
+        let active = "Set active";
+        if (element.id.toString() === localStorage.getItem('my_active_roomW').toString()){
+          active = "Is active";
+        }
+        list.push({
+          id: element.id,
+          name: element.roomname,
+          is_mus: element.is_music,
+          is_active: active,
+        })
+      }
+      return list
     }
   },
   methods: {
@@ -74,7 +137,8 @@ export default {
         password_room: this.password,
         is_music: this.is_music,
       }, {headers: {'Authorization':"Token " + localStorage.getItem("tokenW")}}).then(() =>{
-        localStorage.setItem('roomW', this.NameRoom)
+        localStorage.setItem('active_roomW', this.NameRoom)
+        localStorage.setItem('my_active_roomW', this.NameRoom)
         this.textResponse = 'Success!'
       }).catch(error => {
         console.log(error)
@@ -93,7 +157,7 @@ export default {
 <style scoped>
 .add {
   text-align: left;
-  margin-top: 40px;
+  margin-top: 5px;
   margin-left: 50px;
 }
 .p-inputtext {
@@ -103,5 +167,16 @@ export default {
   font-size: 30px;
   color: black;
   text-align: left;
+}
+.table {
+  width: 98%;
+  border: none;
+  border-collapse: separate;
+  background-color: rgba(112, 129, 183, 0.51);
+  border-radius: 10px;
+}
+.your_room{
+  text-align: left;
+  margin-left: 50px;
 }
 </style>
