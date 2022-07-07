@@ -18,6 +18,7 @@ class Link(models.Model):
     link = models.CharField(max_length=255)
     user_id = models.IntegerField(default=-1, blank=True)
     tg_name = models.CharField(default="", max_length=50, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.link

@@ -105,7 +105,7 @@ export default {
     try {
       this.rooms = await axios.post(`http://127.0.0.1:8000/api/room/my_rooms/`, {username: localStorage.getItem("usernameW")},
           {headers: {'Authorization':"Token " + localStorage.getItem("tokenW")}})
-      this.rooms = this.rooms.data
+      this.rooms = this.rooms.data.result
     } catch (error) {
       console.log(error.response.data)
     }
@@ -116,12 +116,12 @@ export default {
       for (let index = 0; index < this.rooms.length; index++) {
         const element = this.rooms[index]
         let active = "Set active";
-        if (element.id.toString() === localStorage.getItem('my_active_roomW').toString()){
+        if (element.id_room.toString() === localStorage.getItem('my_active_roomW').toString()){
           active = "Is active";
         }
         list.push({
-          id: element.id,
-          name: element.roomname,
+          id: element.id_room,
+          name: element.name_room,
           is_mus: element.is_music,
           is_active: active,
         })
@@ -136,9 +136,9 @@ export default {
         name_room: this.NameRoom,
         password_room: this.password,
         is_music: this.is_music,
-      }, {headers: {'Authorization':"Token " + localStorage.getItem("tokenW")}}).then(() =>{
-        localStorage.setItem('active_roomW', this.NameRoom)
-        localStorage.setItem('my_active_roomW', this.NameRoom)
+      }, {headers: {'Authorization':"Token " + localStorage.getItem("tokenW")}}).then(response =>{
+        localStorage.setItem('active_roomW', response.data.id)
+        localStorage.setItem('my_active_roomW', response.data.id)
         this.textResponse = 'Success!'
       }).catch(error => {
         console.log(error)
