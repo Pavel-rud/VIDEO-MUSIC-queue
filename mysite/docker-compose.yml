@@ -7,6 +7,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    command: python manage.py runserver 0.0.0.0:8000
     ports:
       - 8000:8000
     expose:
@@ -14,13 +15,9 @@ services:
 
   frontend:
     image: nginx:1.13
-    build:
-     context: ./frontend
-     dockerfile: Dockerfile
+    build: ./frontend
     ports:
-      - 8080:8080
-    expose:
-      - 8080
+      - 8081:8081
 
   tg_bot:
     container_name: bot
