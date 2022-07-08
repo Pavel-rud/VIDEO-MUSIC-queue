@@ -34,10 +34,13 @@
       <table class="btq">
         <tr>
           <td>
-            <Button>Pause/Resume</Button>
+            <Button @click="restart">Restart</Button>
           </td>
           <td>
-            <Button>Next</Button>
+            <Button @click="pauseorresume">Pause/Resume</Button>
+          </td>
+          <td>
+            <Button @click="next_link">Next</Button>
           </td>
         </tr>
       </table>
@@ -81,9 +84,15 @@
     </table>
 
 
-    <iframe align="left" width="854" height="480"
-            src="https://www.youtube.com/embed/tgbNymZ7vqY">
-    </iframe>
+
+    <div>
+      <div>
+        video_id : <input type="text" v-model="temp.video_id" /><br />
+        <button @click="applyConfig">Apply</button>
+      </div>
+      <YoutubeVue3 ref="youtube" :videoid="play.video_id" :loop="play.loop" :width="480" :height="320"
+                   @ended="onEnded" @paused="onPaused" @played="onPlayed"/>
+    </div>
   </div>
 
 
@@ -93,6 +102,7 @@
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import axios from "axios";
+import { YoutubeVue3 } from 'youtube-vue3'
 // import {computed} from "vue";
 //import Checkbox from 'primevue/checkbox'
 //import axios from "axios";
@@ -104,6 +114,7 @@ export default {
   components: {
     Button,
     InputText,
+    YoutubeVue3,
   },
   data() {
     return {
@@ -116,6 +127,11 @@ export default {
       room: '',
       listlinks: [],
       list_of_links: '',
+      list_of_id: [],
+
+      pause: false,
+      temp: { video_id:"jNQXAC9IVRw", loop:1 },
+      play : { video_id:"jNQXAC9IVRw", loop:1 },
     }
   },
   async created() {
@@ -131,6 +147,13 @@ export default {
       this.list_of_links = await axios.get(`http://127.0.0.1:8000/api/room/links/` + localStorage.getItem('active_roomW') + '/',
           {headers: {'Authorization': "Token " + localStorage.getItem("tokenW")}})
       this.list_of_links = this.list_of_links.data.result
+
+      let list_id = []
+      for (let index = 0; index < this.list_of_links.length; index++) {
+        const element = this.list_of_links[index]
+        list_id.push(element.link.substr(-11))
+      }
+      this.list_of_id = list_id
     } catch (error) {
       console.log(error.response.data)
     }
@@ -138,13 +161,16 @@ export default {
   computed: {
     listRooms() {
       let list = []
+      //let list_id = []
       for (let index = 0; index < this.list_of_links.length; index++) {
         const element = this.list_of_links[index]
+        //list_id.push(element.link.substr(-11))
         list.push({
           author: element.username_add,
           text: element.link,
         })
       }
+      //this.list_of_id = list_id
       return list
     }
   },
@@ -236,6 +262,46 @@ export default {
       } catch (error) {
         console.log(error.response.data)
       }
+    },
+    applyConfig() {
+      this.play = Object.assign(this.play, this.temp)
+    },
+    playCurrentVideo() {
+      this.$refs.youtube.player.playVideo();
+    },
+    stopCurrentVideo() {
+      this.$refs.youtube.player.stopVideo();
+    },
+    pauseCurrentVideo() {
+      this.$refs.youtube.player.pauseVideo();
+    },
+    pauseorresume(){
+      if (this.pause){
+        this.$refs.youtube.player.playVideo();
+        this.pause = !this.pause
+      }
+      else{
+        this.pause = !this.pause
+        this.$refs.youtube.player.pauseVideo();
+      }
+    },
+    restart(){
+      this.$refs.youtube.player.stopVideo();
+      this.$refs.youtube.player.playVideo();
+    },
+    next_link(){
+      this.temp = { video_id:"12345jNQXAC9IVRw".substr(-11), loop:1 }
+      this.play = { video_id:"jNQXAC9IVRw".substr(-11), loop:1 }
+      this.play = Object.assign(this.play, this.temp)
+    },
+    onEnded() {
+      console.log("## OnEnded")
+    },
+    onPaused() {
+      console.log("## OnPaused")
+    },
+    onPlayed() {
+      console.log("## OnPlayed")
     }
   }
 }

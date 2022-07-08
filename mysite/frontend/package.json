@@ -19,7 +19,9 @@
     "vanta": "^0.5.22",
     "vue": "^3.2.13",
     "vue-router": "^4.0.16",
-    "vue-vanta": "^0.0.1"
+    "vue-vanta": "^0.0.1",
+    "vue3-youtube": "^0.1.9",
+    "youtube-vue3": "^0.1.15"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
