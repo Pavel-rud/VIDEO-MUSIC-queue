@@ -3,7 +3,7 @@ version: '3.3'
 services:
   django:
     container_name: back_django
-#    restart: always
+    restart: always
     build:
       context: .
       dockerfile: Dockerfile
@@ -26,7 +26,3 @@ services:
     container_name: bot
     build: .
     command: python run_bot.py
-
-#networks:
-#  network:
-#    driver: bridge

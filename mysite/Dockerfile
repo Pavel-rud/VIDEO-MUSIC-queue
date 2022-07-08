@@ -9,4 +9,4 @@ WORKDIR /doc_dir
 RUN pip install --upgrade pip
 ADD requirements.txt /doc_dir/
 RUN pip install -r requirements.txt
-ADD . /doc_dir/
+ADD . /doc_dirЫ/
