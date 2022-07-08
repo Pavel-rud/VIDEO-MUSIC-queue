@@ -17,4 +17,4 @@ class LinkSerializer(serializers.ModelSerializer):
 class RoomDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = Room
-        fields = ("name_room", "is_music", "owner_id")
+        fields = ("id", "name_room", "is_music", "owner_id")

@@ -123,8 +123,15 @@ class ListLinksView(APIView):
         for i in t:
             if re.match(regex, i.link) is not None:
                 data.append({
+                    "id": i.id,
                     "link": i.link,
                     "username_add": CustomUser.objects.get(id=i.user_id).username,
                     "data_creation": i.created_at
                 })
         return Response({"result": data})
+
+
+class DeleteLinkView(generics.DestroyAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = Link.objects.all()
+    serializer_class = LinkSerializer
