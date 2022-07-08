@@ -116,6 +116,3 @@ def run_bot():
         bot.infinity_polling()
     except Exception as error:
         print(error)
-
-
-run_bot()

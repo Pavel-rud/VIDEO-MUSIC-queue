@@ -1,0 +1,22 @@
+version: '3.3'
+
+services:
+  django:
+    container_name: back_django
+#    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+    expose:
+      - 8000
+
+  tg_bot:
+    container_name: bot
+    build: ./telegram_bot
+    command: python main_bot.py
+
+#networks:
+#  network:
+#    driver: bridge
