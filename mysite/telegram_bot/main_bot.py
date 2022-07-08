@@ -1,7 +1,7 @@
 import telebot
 import json
 from telebot import types
-from services_bot import *
+from telegram_bot.services_bot import *
 
 link = "http://127.0.0.1:8000"
 

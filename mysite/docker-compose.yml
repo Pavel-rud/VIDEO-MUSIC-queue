@@ -12,10 +12,20 @@ services:
     expose:
       - 8000
 
+  frontend:
+    image: nginx:1.13
+    build: ./frontend
+    ports:
+      - 8080:8080
+    expose:
+      - 8080
+    volumes:
+      - ./config/nginx/conf.d:/etc/nginx/conf.d
+
   tg_bot:
     container_name: bot
-    build: ./telegram_bot
-    command: python main_bot.py
+    build: .
+    command: python run_bot.py
 
 #networks:
 #  network:
