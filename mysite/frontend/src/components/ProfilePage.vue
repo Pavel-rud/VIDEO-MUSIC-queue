@@ -1,6 +1,6 @@
 <template>
 <div class="profile">
-  <img class="rounded-circle"  width="250" height="250" src="{{ avatar }} " style="cursor: pointer; border: 2px solid black; "/>
+<!--  <img class="rounded-circle"  width="250" height="250" src="{{ avatar }} " style="cursor: pointer; border: 2px solid black; "/>-->
   <p class="nameuser">{{ username }}</p>
   <table>
     <tr>
@@ -19,14 +19,14 @@
         <InputText class="p-inputtext" type="text" v-model="tg" id="tg"/>
       </td>
     </tr>
-    <tr>
-      <td>
-        <label for="av"><h6>Avatar: </h6></label>
-      </td>
-      <td>
-        <FileUpload  style="margin-top:5px; margin-left:10px" mode="basic" name="demo[]" url="./upload" accept="image/*" v-model="avatar" id="av"/>
-      </td>
-    </tr>
+<!--    <tr>-->
+<!--      <td>-->
+<!--        <label for="av"><h6>Avatar: </h6></label>-->
+<!--      </td>-->
+<!--      <td>-->
+<!--        <FileUpload  style="margin-top:5px; margin-left:10px" mode="basic" name="demo[]" url="./upload" accept="image/*" v-model="avatar" id="av"/>-->
+<!--      </td>-->
+<!--    </tr>-->
   </table>
   <Button class="bt" @click="save_changes" >Save changes</Button>
   <p>{{textResponse}}</p>

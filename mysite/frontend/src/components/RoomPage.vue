@@ -89,7 +89,7 @@
       <!--        video_id : <input type="text" v-model="temp.video_id"/><br/>-->
       <!--        <button @click="applyConfig">Apply</button>-->
       <!--      </div>-->
-      <YoutubeVue3 ref="youtube" :videoid="play.video_id" :loop="play.loop" :width="854" :height="480"
+      <YoutubeVue3 ref="youtube" :videoid="play.video_id" :loop="play.loop" :width="width_video" :height="height_video"
                    @ended="onEnded" @paused="onPaused" @played="onPlayed"/>
     </div>
   </div>
@@ -119,6 +119,7 @@ export default {
     return {
       RoomId: '',
       NameRoom: '',
+      room_is_music: true,
       password: '',
       inputid: '',
       inputlink: '',
@@ -127,6 +128,8 @@ export default {
       listlinks: [],
       list_of_links: '',
       list_of_id: [],
+      width_video: 854,
+      height_video: 480,
 
       pause: false,
       end_videos: false,
@@ -140,6 +143,15 @@ export default {
           {headers: {'Authorization': "Token " + localStorage.getItem("tokenW")}})
       this.NameRoom = this.room.data.name_room
       this.RoomId = localStorage.getItem('active_roomW')
+      this.room_is_music = this.room.data.is_music
+      if(this.room_is_music){
+        this.width_video = 0
+        this.height_video = 0
+      }
+      else{
+        this.width_video = 854
+        this.height_video = 480
+      }
     } catch (error) {
       console.log(error.response.data)
     }
