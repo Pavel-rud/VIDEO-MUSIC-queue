@@ -82,8 +82,7 @@
 
       </tr>
     </table>
-
-
+    <img src="https://i.gifer.com/9Rdo.gif" class="mirrorY" alt="this slowpoke moves" :width="width_gif"/>
     <div>
       <!--      <div>-->
       <!--        video_id : <input type="text" v-model="temp.video_id"/><br/>-->
@@ -128,8 +127,9 @@ export default {
       listlinks: [],
       list_of_links: '',
       list_of_id: [],
-      width_video: 854,
-      height_video: 480,
+      width_video: 1,
+      height_video: 1,
+      width_gif: 650,
 
       pause: false,
       end_videos: false,
@@ -144,13 +144,17 @@ export default {
       this.NameRoom = this.room.data.name_room
       this.RoomId = localStorage.getItem('active_roomW')
       this.room_is_music = this.room.data.is_music
-      if(this.room_is_music){
-        this.width_video = 0
-        this.height_video = 0
-      }
-      else{
-        this.width_video = 854
-        this.height_video = 480
+      if (this.room_is_music) {
+        console.log("it's music")
+        this.width_video = 1
+        this.height_video = 1
+        this.$refs.youtube.player.setSize(this.width_video, this.height_video)
+        this.width_gif = 650
+      } else {
+        this.width_gif = 1
+        this.width_video = 1024
+        this.height_video = 576
+        this.$refs.youtube.player.setSize(this.width_video, this.height_video)
       }
     } catch (error) {
       console.log(error.response.data)
@@ -450,5 +454,10 @@ export default {
   border-collapse: separate;
   background-color: rgba(112, 129, 183, 0.51);
   border-radius: 10px;
+}
+
+.mirrorY {
+  transform: scale(-1, 1);
+  margin-top: 20px;
 }
 </style>

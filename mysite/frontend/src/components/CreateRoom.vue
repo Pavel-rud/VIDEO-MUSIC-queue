@@ -142,6 +142,7 @@ export default {
         localStorage.setItem('my_active_roomW', response.data.id)
         this.textResponse = 'Success!'
         // this.$router.push('/createroom')
+        // computed()
 
       }).catch(error => {
         console.log(error)

@@ -8,5 +8,5 @@ urlpatterns = [
     path('links/<int:pk>/', ListLinksView.as_view()),
     path('delete_first_link/<int:pk>/', ListLinksView.as_view()),
     path('add_to_room/', AddUserToRoomView.as_view()),
-    path('delete_link/<int:pk>/', DeleteLinkView.as_view())
+    # path('delete_link/<int:pk>/', DeleteLinkView.as_view())
 ]

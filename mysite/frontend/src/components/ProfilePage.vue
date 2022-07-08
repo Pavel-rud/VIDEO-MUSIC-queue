@@ -36,7 +36,7 @@
 <script>
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
-import FileUpload from 'primevue/fileupload';
+// import FileUpload from 'primevue/fileupload';
 import axios from "axios";
 
 export default {
@@ -47,7 +47,7 @@ export default {
   components: {
     Button,
     InputText,
-    FileUpload,
+    // FileUpload,
   },
   data() {
     return {
@@ -77,7 +77,7 @@ export default {
       await axios.put(`http://127.0.0.1:8000/api/sait/auth/users/me/ `, {
         tg_name: this.tg,
         email: this.mail,
-        avatar: this.avatar
+        // avatar: this.avatar
       }, {headers: {'Authorization':"Token " + localStorage.getItem("tokenW")}}).then(response =>{
         response
       }).catch(error => {

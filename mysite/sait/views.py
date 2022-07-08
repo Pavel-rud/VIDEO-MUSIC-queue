@@ -138,7 +138,7 @@ class ListLinksView(APIView):
             return Response({'result': str(e)})
 
 
-class DeleteLinkView(generics.DestroyAPIView):
-    permission_classes = [IsAuthenticated]
-    queryset = Link.objects.all()
-    serializer_class = LinkSerializer
+# class DeleteLinkView(generics.DestroyAPIView):
+#     permission_classes = [IsAuthenticated]
+#     queryset = Link.objects.all()
+#     serializer_class = LinkSerializer
