@@ -14,13 +14,13 @@ services:
 
   frontend:
     image: nginx:1.13
-    build: ./frontend
+    build:
+     context: ./frontend
+     dockerfile: Dockerfile
     ports:
       - 8080:8080
     expose:
       - 8080
-    volumes:
-      - ./config/nginx/conf.d:/etc/nginx/conf.d
 
   tg_bot:
     container_name: bot
