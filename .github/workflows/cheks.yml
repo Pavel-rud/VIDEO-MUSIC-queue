@@ -22,5 +22,7 @@ jobs:
         working-directory: ${{env.working-directory}}
 #      - name: ls
 #        run: ls
+      - name: build
+        run: docker-compose up --build
       - name: start docker
         run: docker-compose up -d
