@@ -130,6 +130,13 @@ class ListLinksView(APIView):
                 })
         return Response({"result": data})
 
+    def delete(self, request, pk):
+        try:
+            Link.objects.filter(room_id=pk)[0].delete()
+            return Response({"result": True})
+        except Exception as e:
+            return Response({'result': str(e)})
+
 
 class DeleteLinkView(generics.DestroyAPIView):
     permission_classes = [IsAuthenticated]

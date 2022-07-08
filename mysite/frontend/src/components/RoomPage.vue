@@ -84,13 +84,12 @@
     </table>
 
 
-
     <div>
-      <div>
-        video_id : <input type="text" v-model="temp.video_id" /><br />
-        <button @click="applyConfig">Apply</button>
-      </div>
-      <YoutubeVue3 ref="youtube" :videoid="play.video_id" :loop="play.loop" :width="480" :height="320"
+      <!--      <div>-->
+      <!--        video_id : <input type="text" v-model="temp.video_id"/><br/>-->
+      <!--        <button @click="applyConfig">Apply</button>-->
+      <!--      </div>-->
+      <YoutubeVue3 ref="youtube" :videoid="play.video_id" :loop="play.loop" :width="854" :height="480"
                    @ended="onEnded" @paused="onPaused" @played="onPlayed"/>
     </div>
   </div>
@@ -102,7 +101,7 @@
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import axios from "axios";
-import { YoutubeVue3 } from 'youtube-vue3'
+import {YoutubeVue3} from 'youtube-vue3'
 // import {computed} from "vue";
 //import Checkbox from 'primevue/checkbox'
 //import axios from "axios";
@@ -130,8 +129,9 @@ export default {
       list_of_id: [],
 
       pause: false,
-      temp: { video_id:"jNQXAC9IVRw", loop:1 },
-      play : { video_id:"jNQXAC9IVRw", loop:1 },
+      end_videos: false,
+      temp: {video_id: "", loop: 1},
+      play: {video_id: "", loop: 1},
     }
   },
   async created() {
@@ -154,9 +154,23 @@ export default {
         list_id.push(element.link.substr(-11))
       }
       this.list_of_id = list_id
+      console.log(this.list_of_id)
+      if (this.list_of_id.length === 0) {
+        this.end_videos = true
+      }
     } catch (error) {
       console.log(error.response.data)
     }
+    try {
+      this.list_of_links = await axios.get(`http://127.0.0.1:8000/api/room/delete_first_link/` + localStorage.getItem('active_roomW') + '/',
+          {headers: {'Authorization': "Token " + localStorage.getItem("tokenW")}})
+      this.list_of_links = this.list_of_links.data.result
+    } catch (error) {
+      console.log(error.response.data)
+    }
+    this.temp = {video_id: this.list_of_id[0], loop: 1}
+    this.play = {video_id: this.list_of_id[0], loop: 1}
+    this.play = Object.assign(this.play, this.temp)
   },
   computed: {
     listRooms() {
@@ -226,9 +240,36 @@ export default {
         this.list_of_links = await axios.get(`http://127.0.0.1:8000/api/room/links/` + localStorage.getItem('active_roomW') + '/',
             {headers: {'Authorization': "Token " + localStorage.getItem("tokenW")}})
         this.list_of_links = this.list_of_links.data.result
+        let list_id = []
+        for (let index = 0; index < this.list_of_links.length; index++) {
+          const element = this.list_of_links[index]
+          list_id.push(element.link.substr(-11))
+        }
+        this.list_of_id = list_id
         // computed()
       } catch (error) {
         console.log(error.response.data)
+      }
+      if (this.end_videos) {
+        this.end_videos = false
+        console.log('uifveduhfeduhfd')
+        try {
+          this.list_of_links = await axios.get(`http://127.0.0.1:8000/api/room/links/` + localStorage.getItem('active_roomW') + '/',
+              {headers: {'Authorization': "Token " + localStorage.getItem("tokenW")}})
+          this.list_of_links = this.list_of_links.data.result
+
+          let list_id = []
+          for (let index = 0; index < this.list_of_links.length; index++) {
+            const element = this.list_of_links[index]
+            list_id.push(element.link.substr(-11))
+          }
+          this.list_of_id = list_id
+        } catch (error) {
+          console.log(error.response.data)
+        }
+        this.temp = {video_id: this.list_of_id[0], loop: 1}
+        this.play = {video_id: this.list_of_id[0], loop: 1}
+        this.play = Object.assign(this.play, this.temp)
       }
     },
     async myroom() {
@@ -275,32 +316,84 @@ export default {
     pauseCurrentVideo() {
       this.$refs.youtube.player.pauseVideo();
     },
-    pauseorresume(){
-      if (this.pause){
+    pauseorresume() {
+      if (this.pause) {
         this.$refs.youtube.player.playVideo();
         this.pause = !this.pause
-      }
-      else{
+      } else {
         this.pause = !this.pause
         this.$refs.youtube.player.pauseVideo();
       }
     },
-    restart(){
+    restart() {
       this.$refs.youtube.player.stopVideo();
       this.$refs.youtube.player.playVideo();
     },
-    next_link(){
-      this.temp = { video_id:"12345jNQXAC9IVRw".substr(-11), loop:1 }
-      this.play = { video_id:"jNQXAC9IVRw".substr(-11), loop:1 }
+
+    async next_link() {
+      if (this.list_of_id.length > 1) {
+        try {
+          this.list_of_links = await axios.delete(`http://127.0.0.1:8000/api/room/delete_first_link/` + localStorage.getItem('active_roomW') + '/',
+              {headers: {'Authorization': "Token " + localStorage.getItem("tokenW")}})
+          this.list_of_links = this.list_of_links.data.result
+        } catch (error) {
+          console.log(error.response.data)
+        }
+      }
+      try {
+        this.list_of_links = await axios.get(`http://127.0.0.1:8000/api/room/links/` + localStorage.getItem('active_roomW') + '/',
+            {headers: {'Authorization': "Token " + localStorage.getItem("tokenW")}})
+        this.list_of_links = this.list_of_links.data.result
+
+        let list_id = []
+        for (let index = 0; index < this.list_of_links.length; index++) {
+          const element = this.list_of_links[index]
+          list_id.push(element.link.substr(-11))
+        }
+        this.list_of_id = list_id
+      } catch (error) {
+        console.log(error.response.data)
+      }
+      this.temp = {video_id: this.list_of_id[0], loop: 1}
+      this.play = {video_id: this.list_of_id[0], loop: 1}
       this.play = Object.assign(this.play, this.temp)
     },
-    onEnded() {
+    async onEnded() {
       console.log("## OnEnded")
+      try {
+        this.list_of_links = await axios.delete(`http://127.0.0.1:8000/api/room/delete_first_link/` + localStorage.getItem('active_roomW') + '/',
+            {headers: {'Authorization': "Token " + localStorage.getItem("tokenW")}})
+        this.list_of_links = this.list_of_links.data.result
+      } catch (error) {
+        console.log(error.response.data)
+      }
+      try {
+        this.list_of_links = await axios.get(`http://127.0.0.1:8000/api/room/links/` + localStorage.getItem('active_roomW') + '/',
+            {headers: {'Authorization': "Token " + localStorage.getItem("tokenW")}})
+        this.list_of_links = this.list_of_links.data.result
+
+        let list_id = []
+        for (let index = 0; index < this.list_of_links.length; index++) {
+          const element = this.list_of_links[index]
+          list_id.push(element.link.substr(-11))
+        }
+        this.list_of_id = list_id
+      } catch (error) {
+        console.log(error.response.data)
+      }
+      if (this.list_of_id.length === 0) {
+        this.end_videos = true
+      }
+      this.temp = {video_id: this.list_of_id[0], loop: 1}
+      this.play = {video_id: this.list_of_id[0], loop: 1}
+      this.play = Object.assign(this.play, this.temp)
     },
     onPaused() {
+      this.pause = true
       console.log("## OnPaused")
     },
     onPlayed() {
+      this.pause = false
       console.log("## OnPlayed")
     }
   }
