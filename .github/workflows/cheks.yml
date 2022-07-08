@@ -17,12 +17,5 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: go to the /mysite
-        run: ls -R
-        working-directory: ${{env.working-directory}}
-#      - name: ls
-#        run: ls
-      - name: build
-        run: docker-compose up --build
       - name: start docker
-        run: docker-compose up -d
+        run: docker-compose up --build
