@@ -6,7 +6,7 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install \
+RUN npm install --location=global npm@8.13.2 \
     npm install router
 
 COPY . .
