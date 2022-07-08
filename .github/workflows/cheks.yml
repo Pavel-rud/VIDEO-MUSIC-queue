@@ -16,5 +16,5 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Build the stack
-        run: cd /mysite \
-            docker-compose up -d
+        run: cd /mysite
+        run: docker-compose up -d
