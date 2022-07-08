@@ -1,8 +1,3 @@
-import os, django
-
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend.settings')
-django.setup()
-
 from telegram_bot.main_bot import run_bot
 
 if __name__ == "__main__":
