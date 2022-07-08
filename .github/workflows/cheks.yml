@@ -16,6 +16,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: go to the /mysite
-        run: ls
+        run: cd mysite/
       - name: start docker
         run: docker-compose up -d
