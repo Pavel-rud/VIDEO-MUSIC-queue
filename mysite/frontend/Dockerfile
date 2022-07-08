@@ -1,6 +1,6 @@
 FROM node:lts-alpine as build-stage
 
-RUN npm install -g http-server
+RUN npm install --location=global http-server
 
 WORKDIR /app
 
